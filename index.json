@@ -55,7 +55,7 @@
           "source": {
             "type": "git",
             "url": "https://github.com/prettyfox/dsh-selection-quote-auto.git",
-            "commit": "0000000000000000000000000000000000000000"
+            "commit": "7fce1f029a50ba58a8d751c431951974b2f5def1"
           },
           "engines": {
             "dsh": ">=0.2.0"
