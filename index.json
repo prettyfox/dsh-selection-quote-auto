@@ -1,0 +1,67 @@
+{
+  "format": 1,
+  "title": {
+    "en": "dsh-selection-quote-auto",
+    "zh": "dsh-selection-quote-auto"
+  },
+  "description": {
+    "en": "Selection-to-clipboard + inline comment chip for DeepSeek Harness (fork of dsh-selection-quote).",
+    "zh": "面向 DeepSeek Harness 的划词增强：选中即复制，「注释」浮框与批注。"
+  },
+  "metadata": {
+    "categories": {
+      "ui": {
+        "title": {
+          "en": "UI Enhancements",
+          "zh": "UI 增强"
+        }
+      }
+    },
+    "labels": {},
+    "sortKeys": {}
+  },
+  "plugins": [
+    {
+      "name": "dsh-selection-quote-auto",
+      "title": {
+        "en": "Selection Quote Auto",
+        "zh": "划词引用与批注（自动版）"
+      },
+      "description": {
+        "en": "Selecting text in an assistant message copies it and shows a Comment chip that opens the inline comment box. Keeps the right-click menu and Cmd+L. Warm wavy underline markers, liquid-glass surfaces, scroll-glued pins.",
+        "zh": "在助手消息里选中文字即自动复制，并弹出「注释」浮框，点开才是评论框；保留右键菜单与 ⌘L，暖色波浪标记、液态玻璃外观、角标滚动跟随。"
+      },
+      "author": "prettyfox",
+      "homepage": "https://github.com/prettyfox/dsh-selection-quote-auto",
+      "repository": {
+        "url": "https://github.com/prettyfox/dsh-selection-quote-auto"
+      },
+      "metadata": {
+        "category": "ui",
+        "keywords": [
+          "dsh-plugin",
+          "selection-quote",
+          "annotation",
+          "ui",
+          "clipboard"
+        ],
+        "labels": [],
+        "sortKeys": {}
+      },
+      "versions": [
+        {
+          "version": "0.2.0",
+          "publishTimestamp": 1792589097,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/prettyfox/dsh-selection-quote-auto.git",
+            "commit": "0000000000000000000000000000000000000000"
+          },
+          "engines": {
+            "dsh": ">=0.2.0"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "name": "dsh-selection-quote-auto",
+  "version": "0.2.0",
+  "description": "选中即复制 + 「注释」浮框：DeepSeek Harness 划词引用与批注增强（基于 dsh-selection-quote 0.2.0 的本地增强版）",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prettyfox/dsh-selection-quote-auto.git"
+  },
+  "homepage": "https://github.com/prettyfox/dsh-selection-quote-auto#readme",
+  "bugs": {
+    "url": "https://github.com/prettyfox/dsh-selection-quote-auto/issues"
+  },
+  "author": "prettyfox",
+  "contributors": [
+    "xt765 (upstream dsh-selection-quote)"
+  ],
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "lib",
+    "locale",
+    "assets",
+    "cordis.patch.yml",
+    "screenshots.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "selection-quote",
+    "selection-comment",
+    "quote",
+    "annotation",
+    "划词",
+    "批注"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "entry": "./lib/client.js",
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-api-session-controller",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-renderer",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-plugin-manager"
+      ]
+    }
+  },
+  "license": "MIT"
+}

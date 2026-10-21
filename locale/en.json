@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "title": "Selection Quote & Comment",
+    "description": "Right-click selected text in conversation messages to Copy or Add to Chat (⌘L) with persistent selection highlighting, blue numbered teardrop pin badges (1, 2...), a rounded capsule comment box, and compact 'N Comments' pills with hover detail cards in both the composer and sent messages."
+  },
+  "config": {
+    "enabled": {
+      "title": "Enable Selection Quote & Comment",
+      "description": "Whether to enable the selection context menu, blue pin badges, capsule comment input, and N-comments pills."
+    },
+    "addToChatMode": {
+      "title": "Default Add to Chat (⌘L) Behavior",
+      "description": "Whether Add to Chat stages items as N-comments pills (dock) or inserts directly into the draft (direct)."
+    },
+    "commentLabel": {
+      "title": "Comment Prefix Label",
+      "description": "Label prefix used when serializing comments into Markdown (default: '批注')."
+    }
+  }
+}

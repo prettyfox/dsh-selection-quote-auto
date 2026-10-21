@@ -1,0 +1,90 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>pin scroll harness</title>
+<style>
+  body { margin: 0; font: 15px -apple-system, "PingFang SC", sans-serif; }
+  [data-conversation-scroll] { position: absolute; top: 0; left: 0; right: 0; bottom: 220px; overflow-y: auto; }
+  [data-conversation-content] { padding: 20px 40px; }
+  .message { height: 900px; padding-top: 40px; }
+  [data-composer-card] { position: absolute; left: 0; right: 0; bottom: 0; height: 200px; background: #eef; }
+  .dsh-sq-pin-badge { position: fixed; width: 26px; height: 26px; border-radius: 50%; background: #2563eb; color: #fff; font-size: 12px; line-height: 26px; text-align: center; }
+</style></head>
+<body>
+<div data-conversation-scroll>
+  <div data-conversation-content>
+    <div class="message"></div>
+    <p id="target">这是要被引用的正文段落，角标应该始终贴着这段文字的右上角移动。</p>
+    <div class="message"></div>
+  </div>
+</div>
+<div data-composer-card></div>
+<div class="dsh-sq-pin-badge" data-dsh-pin-badge="1" data-dsh-pin-key="pin-item-test">1</div>
+<pre id="result" style="position:fixed;left:0;bottom:0;margin:0;font-size:11px;background:#fff;z-index:99999"></pre>
+<script>window.__ModuleLoader__ = { load(def) { window.__dshDef = def; } };</script>
+<script src="../lib/client.js"></script>
+<script>
+  const out = [];
+  try {
+    const mod = window.__dshDef.factory((pkg) => {
+      if (pkg === "react") return { useMemo: (f) => f(), useRef: (v) => ({ current: v }), useEffect: () => {}, useCallback: (f) => f, useState: (v) => [v, () => {}], useSyncExternalStore: (s, g) => g() };
+      if (pkg === "react-dom") return { createPortal: (n) => n };
+      if (pkg === "react/jsx-runtime") return { Fragment: "Fragment", jsx: (t, p) => ({ type: t, props: p }), jsxs: (t, p) => ({ type: t, props: p }) };
+      return {};
+    });
+    const badge = document.querySelector('[data-dsh-pin-key="pin-item-test"]');
+    const scrollRoot = document.querySelector("[data-conversation-scroll]");
+    const target = document.getElementById("target");
+    let range = null;
+    const makeRange = () => {
+      const r = document.createRange();
+      r.selectNodeContents(target);
+      return r;
+    };
+    const sync = () => {
+      const rect = mod.resolveLivePinRect({ quote: target.textContent, range });
+      const bounds = mod.computePinBounds();
+      if (!mod.isRectInPinBounds(rect, bounds)) { badge.style.visibility = "hidden"; return false; }
+      const coords = mod.pinCoords(rect);
+      badge.style.visibility = "visible";
+      badge.style.left = coords.left + "px";
+      badge.style.top = coords.top + "px";
+      return true;
+    };
+    const check = (label) => {
+      const rect = range.getBoundingClientRect();
+      const b = badge.getBoundingClientRect();
+      const dx = Math.round(b.left - rect.right);
+      const dy = Math.round(b.top - rect.top);
+      const ok = Math.abs(dx) <= 2 && Math.abs(dy) <= 2;
+      out.push(label + ": visible=" + (badge.style.visibility !== "hidden") + " dx=" + dx + " dy=" + dy + (ok ? " OK" : " FAIL"));
+    };
+    range = makeRange();
+    const targetOffset = target.getBoundingClientRect().top + scrollRoot.scrollTop;
+    const syncAndCheck = (desiredTop, label, expectVisible = true) => {
+      const maxScroll = scrollRoot.scrollHeight - scrollRoot.clientHeight;
+      const top = Math.max(0, Math.min(maxScroll, targetOffset - desiredTop));
+      scrollRoot.scrollTop = top;
+      sync();
+      const rect = range.getBoundingClientRect();
+      const b = badge.getBoundingClientRect();
+      const dx = Math.round(b.left - rect.right);
+      const dy = Math.round(b.top - rect.top);
+      const visible = badge.style.visibility !== "hidden";
+      const ok = visible === expectVisible && (!visible || (Math.abs(dx) <= 2 && Math.abs(dy) <= 2));
+      const dbgRect = mod.resolveLivePinRect({ quote: target.textContent, range });
+      const dbgBounds = mod.computePinBounds();
+      out.push(label + "(scroll=" + top + "): visible=" + (badge.style.visibility !== "hidden") + " dx=" + dx + " dy=" + dy + (ok ? " OK" : " FAIL");
+    };
+    syncAndCheck(60, "topEdge");
+    syncAndCheck(120, "visible-120");
+    syncAndCheck(200, "visible-200");
+    syncAndCheck(-500, "scrolledOutAbove", false);
+    syncAndCheck(600, "behindComposer", false);
+    scrollRoot.scrollTop = scrollRoot.scrollHeight;
+    sync();
+    out.push("atBottomHidden=" + (badge.style.visibility === "hidden" ? "OK" : "FAIL"));
+  } catch (e) {
+    out.push("ERROR: " + ((e && e.stack) || e));
+  }
+  document.getElementById("result").textContent = out.join(" | ");
+</script>
+</body></html>

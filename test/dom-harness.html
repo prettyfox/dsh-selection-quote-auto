@@ -1,0 +1,43 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>range reanchor harness</title></head>
+<body>
+<div id="root"><p>第一段：这是要引用的文字，包含 <code>inline code</code> 和普通文本。</p><p>第二段：多行引用的第二行。</p></div>
+<pre id="result"></pre>
+<script>window.__ModuleLoader__ = { load(def) { window.__dshDef = def; } };</script>
+<script src="../lib/client.js"></script>
+<script>
+  const out = [];
+  try {
+    const mod = window.__dshDef.factory((pkg) => {
+      if (pkg === "react") return { useMemo: (f) => f(), useRef: (v) => ({ current: v }), useEffect: () => {}, useCallback: (f) => f, useState: (v) => [v, () => {}], useSyncExternalStore: (s, g) => g() };
+      if (pkg === "react-dom") return { createPortal: (n) => n };
+      if (pkg === "react/jsx-runtime") return { Fragment: "Fragment", jsx: (t, p) => ({ type: t, props: p }), jsxs: (t, p) => ({ type: t, props: p }) };
+      return {};
+    });
+    const root = document.getElementById("root");
+    const selRange = document.createRange();
+    const textNode = root.querySelector("p").firstChild;
+    selRange.setStart(textNode, 4);
+    selRange.setEnd(textNode, 12);
+    const expected = selRange.toString();
+    out.push("connected=" + mod.isRangeConnected(selRange));
+    out.push("livePinShown=" + (mod.resolveLivePinRect({ quote: expected, range: selRange }) ? "YES(OK)" : "NO(WRONG)"));
+    out.push("startIsConnected(before)=" + String(selRange.startContainer.isConnected));
+    root.innerHTML = root.innerHTML; // 模拟消息重渲染：旧 Range 被浏览器重映射到父元素
+    out.push("startIsConnected(after)=" + String(selRange.startContainer.isConnected));
+    out.push("remappedToParent=" + String(selRange.startContainer === root.querySelector("p")));
+    out.push("quoteMismatchDetected=" + (mod.rangeMatchesQuote(selRange, expected) ? "NO(WRONG)" : "YES(OK)"));
+    const stale = { quote: expected, range: selRange, pinRect: { top: 10, left: 10, bottom: 20, right: 20, width: 10, height: 10 } };
+    out.push("stalePinHidden=" + (mod.resolveLivePinRect(stale) ? "NO(WRONG)" : "YES(OK)"));
+
+    const r1 = mod.findQuoteTextRange(root, "这是要引用的文字，包含 inline code 和普通文本。");
+    out.push("reanchorSingle=" + (r1 && mod.isRangeConnected(r1) ? "OK" : "FAIL"));
+    const r2 = mod.findQuoteTextRange(root, "第一段：这是要引用的文字\n第二段：多行引用的第二行。");
+    out.push("reanchorMulti=" + (r2 && mod.isRangeConnected(r2) ? "OK" : "FAIL"));
+    out.push("missing=" + (mod.findQuoteTextRange(root, "这段文字在页面上不存在") ? "WRONG" : "null(OK)"));
+  } catch (e) {
+    out.push("ERROR: " + ((e && e.stack) || e));
+  }
+  document.getElementById("result").textContent = out.join("\n");
+</script>
+</body></html>
