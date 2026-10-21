@@ -26,10 +26,12 @@
 ### 方式一：市场索引源（Discover，无需 npm）
 
 ```text
-https://cdn.jsdelivr.net/gh/prettyfox/dsh-selection-quote-auto@ee4d69273c1187c2dc72f652385a3fb1ea53788d/index.json
+https://cdn.jsdelivr.net/gh/prettyfox/dsh-selection-quote-auto@main/index.json
 ```
 
 在 DSH 的 **插件 → 发现（Discover）→ 索引源** 里添加该 URL 后即可搜索安装（该功能由实验性 `@deepseek-ai/dsh-experimental-plugin-market-bundle` 提供，需在 profile 的 `dsh.profile.bundles` 里启用并重启一次 `dsh web`）。
+
+> 索引按 `@main` 分支提供（首次冷启动最快）。需要钉死不可变版本时用 `@ee4d69273c1187c2dc72f652385a3fb1ea53788d` 代替 `@main`。
 
 ### 方式二：预构建 tarball / 源码
 
