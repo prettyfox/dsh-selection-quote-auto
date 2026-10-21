@@ -1,6 +1,6 @@
 {
   "name": "dsh-selection-quote-auto",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "选中即复制 + 「注释」浮框：DeepSeek Harness 划词引用与批注增强（基于 dsh-selection-quote 0.2.0 的本地增强版）",
   "repository": {
     "type": "git",

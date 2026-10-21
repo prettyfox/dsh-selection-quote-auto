@@ -90,6 +90,13 @@ node --test test/index.test.js
 
 `test/dom-harness.html`（Range 失效重定位）、`test/pin-scroll-harness.html`（滚动跟随）可用 headless Chrome 打开查看 OK/FAIL 输出。
 
+## 更新日志
+
+### 0.2.1
+
+- 修复：`lib/client.js` 里 `MODULE_ID` 仍是上游的 `dsh-selection-quote`，宿主按包名 `dsh-selection-quote-auto` 取模块时拿不到注册，报
+  `client-modules: could not load "dsh-selection-quote-auto" … loaded without registering`，插件页整页变成 `Failed to load plugins`。现改为 `dsh-selection-quote-auto`。
+
 ## 来源与许可
 
 - 上游：[xt765/dsh-selection-quote](https://github.com/xt765/dsh-selection-quote) 0.2.0（MIT，© 2026 xt765）

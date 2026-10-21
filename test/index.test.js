@@ -105,7 +105,7 @@ test("client bundle registers conversation.input.overlay and conversation.input.
 
   await import("../lib/client.js");
   assert.ok(loadedModuleDef, "client bundle should register via window.__ModuleLoader__.load");
-  assert.equal(loadedModuleDef.id, "dsh-selection-quote");
+  assert.equal(loadedModuleDef.id, "dsh-selection-quote-auto");
 
   const clientMod = loadedModuleDef.factory((pkg) => {
     if (pkg === "react") {
