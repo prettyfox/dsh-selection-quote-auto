@@ -23,6 +23,32 @@
 
 ## 安装
 
+### 方式一：市场索引源（Discover，无需 npm）
+
+```text
+https://cdn.jsdelivr.net/gh/prettyfox/dsh-selection-quote-auto@ee4d69273c1187c2dc72f652385a3fb1ea53788d/index.json
+```
+
+在 DSH 的 **插件 → 发现（Discover）→ 索引源** 里添加该 URL 后即可搜索安装（该功能由实验性 `@deepseek-ai/dsh-experimental-plugin-market-bundle` 提供，需在 profile 的 `dsh.profile.bundles` 里启用并重启一次 `dsh web`）。
+
+### 方式二：预构建 tarball / 源码
+
+```sh
+# 预构建 tarball（推荐，免构建）
+dsh plugin --profile web add https://github.com/prettyfox/dsh-selection-quote-auto/releases/download/v0.2.0/dsh-selection-quote-auto-0.2.0.tgz
+
+# 或直接从 GitHub 源码（等价于 git clone 后安装）
+dsh plugin --profile web add git+https://github.com/prettyfox/dsh-selection-quote-auto.git
+```
+
+### 方式三：本仓库
+
+```sh
+git clone https://github.com/prettyfox/dsh-selection-quote-auto.git
+dsh plugin --profile web add ./dsh-selection-quote-auto
+```
+
+
 ```sh
 dsh plugin --profile web add dsh-selection-quote-auto
 ```
