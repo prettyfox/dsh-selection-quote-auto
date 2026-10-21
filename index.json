@@ -50,12 +50,12 @@
       },
       "versions": [
         {
-          "version": "0.2.0",
-          "publishTimestamp": 1792589097,
+          "version": "0.2.1",
+          "publishTimestamp": 1792592753,
           "source": {
             "type": "git",
             "url": "https://github.com/prettyfox/dsh-selection-quote-auto.git",
-            "commit": "7fce1f029a50ba58a8d751c431951974b2f5def1"
+            "commit": "619da82d85d67b43e23196d10d6f8ada1c8fcd1b"
           },
           "engines": {
             "dsh": ">=0.2.0"
